@@ -69,7 +69,7 @@ export function invoices(state = {}, action) {
       };
     case invoiceContants.FETCH_ONE_INVOICE_HEADER_SUCCESS:
       return {
-        invoiceHeader: action.res.data,
+        invoiceHeader: [action.res.data],
       };
     case invoiceContants.FETCH_ONE_INVOICE_HEADER_FAILURE:
       return {

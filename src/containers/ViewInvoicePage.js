@@ -47,38 +47,42 @@ class ViewInvoicePage extends React.Component {
           <FormGroup>
             <span>Company Inc.</span>
           </FormGroup>
-           <Form>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={2}>Customer Name</Label>
-              <Col sm={6}>
-                <Input plaintext value="123" />
-              </Col>
-              <Label for="exampleEmail" sm={2}>Invoice #</Label>
-              <Col sm={2}>
-                {/* <Input plaintext value={invoices.invoicesHeader.invoice_number} /> */}
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={2}>Customer Address</Label>
-              <Col sm={6}>
-                {/* <Input plaintext value={invoices.invoicesHeader.Customer.customer_name} /> */}
-              </Col>
-              <Label for="exampleEmail" sm={2}>Invoice #</Label>
-              <Col sm={2}>
-                <Input plaintext value="Some plain " />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={2}>Customer Name</Label>
-              <Col sm={6}>
-                <Input plaintext value="Some plain text/ static value" />
-              </Col>
-              <Label for="exampleEmail" sm={2}>Invoice #</Label>
-              <Col sm={2}>
-                <Input plaintext value="Some plain " />
-              </Col>
-            </FormGroup>
+           
+            <div>
+            {invoices && invoices.invoiceHeader && invoices.invoiceHeader.map((row,index)=> 
+            <Form>
+            
+              <FormGroup row>
+                <Label for="exampleEmail" sm={2}>Customer Name</Label>
+                <Col sm={6}>
+                  <Input plaintext value={row.Customer.customer_name} />
+                </Col>
+                <Label for="exampleEmail" sm={2}>Invoice #</Label>
+                <Col sm={2}>
+                  <Input plaintext value={row.invoice_number} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="exampleEmail" sm={2}>Customer Address</Label>
+                <Col sm={6}>
+                  <Input plaintext value={row.Customer.customer_address} />
+                </Col>
+                <Label for="exampleEmail" sm={2}>Invoice Date</Label>
+                <Col sm={2}>
+                  <Input plaintext value={row.invoice_date} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="exampleEmail" sm={2}>Customer Phone</Label>
+                <Col sm={6}>
+                  <Input plaintext value={row.Customer.customer_phone} />
+                </Col>
+              </FormGroup>
+               
             </Form>
+            )}
+            </div>
+           
           
           <table className="table table-striped">
             <thead>
@@ -117,6 +121,7 @@ class ViewInvoicePage extends React.Component {
 
 function mapStateToProps(state) {
   const { invoices } = state;
+  console.log('invoices: ', invoices);
   return {
     invoices,
   };
