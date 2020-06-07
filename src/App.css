@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.button-margin-tb {
+  margin: 7px 0;
+}
+
+.button-margin-side {
+  margin: 5px 5px;
+}
+
+.form-wrapper{
+  margin: 2em 0;
+}

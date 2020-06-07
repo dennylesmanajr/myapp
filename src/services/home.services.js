@@ -31,7 +31,7 @@ export const homeService = {
 function getListInvoicesService() {
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json'}
+        headers: authHeader(),
     };
 
     return fetch(`http://localhost:8000/api/v1/invoice`, requestOptions);

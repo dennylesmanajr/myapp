@@ -7,6 +7,7 @@ import { alertActions } from './actions';
 import { PrivateRoute } from './components/PrivateRoute';
 import { LoginPage } from "./components/loginComponent";
 import { HomePage } from "./containers/HomePage";
+import { NewInvoicePage } from "./containers/NewInvoicePage";
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -103,6 +104,7 @@ class App extends React.Component {
                           <Switch>
                             <Route path="/login" component={LoginPage} />
                             <PrivateRoute exact path="/home" component={HomePage} />
+                            <PrivateRoute exact path="/new_invoice" component={NewInvoicePage} />
                           </Switch>
                     </Router>
                 </div>

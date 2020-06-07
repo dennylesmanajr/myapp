@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { homeActions } from '../actions';
+import ModalForm  from "../components/ModalForm";
 
 class HomePage extends React.Component {
     componentDidMount() {
@@ -36,6 +37,13 @@ class HomePage extends React.Component {
                     <Link to="/login">Logout</Link>
                 </p>
 
+                <h1>List Invoices</h1>
+                <div className="col-md-3 float-right">
+                    {/* <Link to="/new_invoice">
+                        <button className="btn btn-primary float-right button-margin-tb">New</button>
+                    </Link> */}
+                    <ModalForm buttonLabel="Add Invoice" addItemToState={this.addItemToState}/>
+                </div>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -57,8 +65,8 @@ class HomePage extends React.Component {
                                 <td>{row.Customer.customer_name}</td>
                                 <td>{row.total_amount}</td>
                                 <td>
-                                    <button className="btn btn-primary" type="submit">Edit</button>
-                                    <button className="btn btn-primary" type="submit">Delete</button>
+                                    <button className="btn btn-primary button-margin-side" type="submit">Edit</button>
+                                    <button className="btn btn-primary button-margin-side" type="submit">Delete</button>
                                 </td>
                             </tr>
                         )}
