@@ -2,20 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { homeActions } from '../actions';
+import { invoiceActions } from '../actions';
 import ModalForm  from "../components/ModalForm";
 
 class HomePage extends React.Component {
     componentDidMount() {
-        console.log('componentDidMount: ');
+        
         // this.props.dispatch(userActions.getAll());
         this.props.doFetchListInvoices();
     }
 
     render() {
-        console.log(process.env.REACT_APP_FORMAT_DATE);
-        const { user, users, home } = this.props;
-        console.log('home: ', home);
+        
+        const { user, users, invoices } = this.props;
+        
 
         return (
             <div className="col-md-12">
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {home.items && home.items.data.map((row, index) =>
+                        {invoices.items && invoices.items.data.map((row, index) =>
                             // <li key={user.id}>
                             //     {user.firstName + ' ' + user.lastName}
                             // </li>
@@ -65,7 +65,8 @@ class HomePage extends React.Component {
                                 <td>{row.Customer.customer_name}</td>
                                 <td>{row.total_amount}</td>
                                 <td>
-                                    <button className="btn btn-primary button-margin-side" type="submit">Edit</button>
+                                    <button className="btn btn-primary button-margin-side" type="submit">View</button>
+                                    <ModalForm buttonLabel="Edit" item={row} updateState={this.props.updateState}/>
                                     <button className="btn btn-primary button-margin-side" type="submit">Delete</button>
                                 </td>
                             </tr>
@@ -78,18 +79,18 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication, home, } = state;
+    const { users, authentication, invoices, } = state;
     const { user } = authentication;
     return {
         user,
         users,
-        home,
+        invoices,
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        doFetchListInvoices: () => dispatch(homeActions.getListInvoices()),
+        doFetchListInvoices: () => dispatch(invoiceActions.getListInvoices()),
     }
 }
 

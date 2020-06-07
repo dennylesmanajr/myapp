@@ -59,39 +59,48 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/crud', {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: this.state.id,
-        invoice_number: this.state.invoice_number,
-        invoice_date: this.state.invoice_date,
-        customer_id: this.state.customer_id,
-        phone: this.state.phone,
-        location: this.state.location,
-        hobby: this.state.hobby
-      })
-    })
-      .then(response => response.json())
-      .then(item => {
-        if(Array.isArray(item)) {
-          // console.log(item[0])
-          this.props.updateState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
-      })
-      .catch(err => console.log(err))
+    const param = {
+      id: this.state.id,
+      invoice_number: this.state.invoice_number,
+      invoice_date: this.state.invoice_date,
+      customer_id: Number(this.state.customer_id),
+    }
+    
+    this.props.doEditInvoice(param);
+    this.props.toggle();
+    // fetch('http://localhost:3000/crud', {
+    //   method: 'put',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     id: this.state.id,
+    //     invoice_number: this.state.invoice_number,
+    //     invoice_date: this.state.invoice_date,
+    //     customer_id: this.state.customer_id,
+    //     phone: this.state.phone,
+    //     location: this.state.location,
+    //     hobby: this.state.hobby
+    //   })
+    // })
+    //   .then(response => response.json())
+    //   .then(item => {
+    //     if(Array.isArray(item)) {
+    //       // console.log(item[0])
+    //       this.props.updateState(item[0])
+    //       this.props.toggle()
+    //     } else {
+    //       console.log('failure')
+    //     }
+    //   })
+    //   .catch(err => console.log(err))
   }
 
   componentDidMount(){
     // if item exists, populate the state with proper data
     if(this.props.item){
-      const { id, invoice_number, invoice_date, customer_id, phone, location, hobby } = this.props.item
-      this.setState({ id, invoice_number, invoice_date, customer_id, phone, location, hobby })
+      const { id, invoice_number, invoice_date, customer_id } = this.props.item
+      this.setState({ id, invoice_number, invoice_date, customer_id })
     }
 
     this.props.doFetchListCustomers();
@@ -145,6 +154,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         doFetchListCustomers: () => dispatch(invoiceActions.getCustomerList()),
         doAddInvoice: (data) => dispatch(invoiceActions.addInvoice(data)),
+        doEditInvoice: (data) => dispatch(invoiceActions.editInvoice(data)),
     }
 }
 

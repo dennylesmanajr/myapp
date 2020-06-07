@@ -26,9 +26,11 @@ class ModalForm extends Component {
 
       if(label === 'Edit'){
         button = <Button
-                  color="warning"
+                  color="primary"
+                  className="button-margin-side"
                   onClick={this.toggle}
-                  style={{float: "left", marginRight:"10px"}}>{label}
+                  // style={{float: "left", marginRight:"10px"}}
+                  >{label}
                 </Button>
         title = 'Edit Item'
       } else {

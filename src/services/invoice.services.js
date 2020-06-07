@@ -6,7 +6,18 @@ import { userService } from '../services';
 export const invoiceService = {
     getListCustomers,
     addInvoice,
+    editInvoice,
+    getListInvoicesService,
 };
+
+function getListInvoicesService() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoice`, requestOptions);
+}
 
 // function getListInvoices() {
 //     console.log('password: ', password);
@@ -49,6 +60,20 @@ function addInvoice(param) {
     };
 
     return fetch(`http://localhost:8000/api/v1/invoice`, requestOptions)
+        .then(handleResponse)
+        .then(res => {return res;});
+}
+
+
+function editInvoice(param) {
+    console.log('param: ', param);
+    const requestOptions = {
+        method: 'PUT',
+        headers: authHeader(),
+        body: JSON.stringify({ ...param })
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoice/`+param.id, requestOptions)
         .then(handleResponse)
         .then(res => {return res;});
 }

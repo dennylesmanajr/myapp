@@ -3,10 +3,27 @@ import { invoiceService } from '../services';
 import { alertActions } from './';
 
 export const invoiceActions = {
+    getListInvoices,
     getCustomerList,
     addInvoice,
+    editInvoice
 };
 
+
+function getListInvoices () {
+    return dispatch => {
+        dispatch(request());
+
+        invoiceService.getListInvoicesService()
+        .then(response => response.json())
+        .then(data => dispatch(success(data)))
+        .catch(error => dispatch(failure(error)));
+    };
+
+    function request() { return { type: invoiceContants.FETCH_LIST_INVOICES_REQUEST } }
+    function success(res) {  return { type: invoiceContants.FETCH_LIST_INVOICES_SUCCESS, res } }
+    function failure(error) { return { type: invoiceContants.FETCH_LIST_INVOICES_FAILURE, error } }
+}
 
 function getCustomerList () {
     return dispatch => {
@@ -24,6 +41,39 @@ function getCustomerList () {
 }
 
 
+function editInvoice (param) {
+    
+    return dispatch => {
+        dispatch(request());
+
+        // invoiceService.addInvoice(invoice_number, invoice_date,customer_id)
+        // .then(response => response.json())
+        // .then(data => dispatch(success(data)))
+        // .catch(error => dispatch(failure(error)));
+
+        invoiceService.editInvoice(param)
+            .then(
+                res => { 
+                    
+                    
+                    dispatch(success(res));
+                    dispatch(alertActions.success(res.message));
+                    // history.push('/');
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request() { return { type: invoiceContants.EDIT_INVOICE_REQUEST } }
+    function success(res) { return { type: invoiceContants.EDIT_INVOICE_SUCCESS, res } }
+    function failure(error) { return { type: invoiceContants.EDIT_INVOICE_FAILURE, error } }
+}
+
+
+
 function addInvoice (param) {
     
     return dispatch => {
@@ -37,7 +87,7 @@ function addInvoice (param) {
         invoiceService.addInvoice(param)
             .then(
                 res => { 
-                    console.log('res: ', res);
+                    
                     
                     dispatch(success(res));
                     dispatch(alertActions.success(res.message));

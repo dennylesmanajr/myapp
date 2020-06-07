@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { homeActions } from '../actions';
+// import { homeActions } from '../actions';
 
 class NewInvoicePage extends React.Component {
     componentDidMount() {
         console.log('componentDidMount: ');
         // this.props.dispatch(userActions.getAll());
-        this.props.doFetchListInvoices();
+        // this.props.doFetchListInvoices();
     }
 
     render() {
@@ -43,18 +43,18 @@ class NewInvoicePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication, home, } = state;
+    const { users, authentication, } = state;
     const { user } = authentication;
     return {
         user,
         users,
-        home,
+        // home,
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        doFetchListInvoices: () => dispatch(homeActions.getListInvoices()),
+        // doFetchListInvoices: () => dispatch(homeActions.getListInvoices()),
     }
 }
 
