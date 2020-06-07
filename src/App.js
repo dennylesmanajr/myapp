@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import { history } from './helpers';
 import { alertActions } from './actions';
@@ -26,23 +26,83 @@ class App extends React.Component {
   
 
   render(){
-    const { alert } = this.props;
+    const { alert, authentication } = this.props;
+    console.log('authentication: ', authentication);
+
+    
       return (
-        <div className="jumbotron">
+        <div className="">
             <div className="container">
-                <div className="col-sm-8 col-sm-offset-2">
+                <div className="col-md-12">
                     {alert.message &&
                         <div className={`alert ${alert.type}`}>{alert.message}</div>
                     }
                     <Router>
-                        {/* <div>
-                            <Route path="/login" component={LoginPage} />
-                            <PrivateRoute exact path="/" component={HomePage} />
-                            
-                        </div> */}
+                        {authentication.loggedIn && <nav className="navbar navbar-expand navbar-dark bg-dark">
+                          <Link to={"/"} className="navbar-brand">
+                            My App
+                          </Link>
+                          <div className="navbar-nav mr-auto">
+                            <li className="nav-item">
+                              <Link to={"/home"} className="nav-link">
+                                Home
+                              </Link>
+                            </li>
+
+                            {/* {showModeratorBoard && (
+                              <li className="nav-item">
+                                <Link to={"/mod"} className="nav-link">
+                                  Moderator Board
+                                </Link>
+                              </li>
+                            )}
+
+                            {showAdminBoard && (
+                              <li className="nav-item">
+                                <Link to={"/admin"} className="nav-link">
+                                  Admin Board
+                                </Link>
+                              </li>
+                            )}
+
+                            {currentUser && (
+                              <li className="nav-item">
+                                <Link to={"/user"} className="nav-link">
+                                  User
+                                </Link>
+                              </li>
+                            )} */}
+                            <li className="nav-item">
+                                <Link to={"/user"} className="nav-link">
+                                  User
+                                </Link>
+                              </li>
+                              <li className="nav-item">
+                                <Link to={"/user"} className="nav-link">
+                                  User
+                                </Link>
+                              </li>
+                              <li className="nav-item">
+                                <Link to={"/user"} className="nav-link">
+                                  User
+                                </Link>
+                              </li>
+                          </div>
+
+                            <div className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                  <span className="navbar-brand mb-0 h1">{authentication.user.email}</span>
+                              </li>
+                              <li className="nav-item">
+                                <a href="/login" className="nav-link" onClick={this.logOut}>
+                                  LogOut
+                                </a>
+                              </li>
+                            </div>
+                        </nav>}
                           <Switch>
                             <Route path="/login" component={LoginPage} />
-                            <PrivateRoute exact path="/" component={HomePage} />
+                            <PrivateRoute exact path="/home" component={HomePage} />
                           </Switch>
                     </Router>
                 </div>
@@ -53,9 +113,10 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { alert } = state;
+  const { alert, authentication } = state;
   return {
-      alert
+      alert,
+      authentication,
   };
 }
 

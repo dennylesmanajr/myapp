@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
         console.log('loggingIn: ', loggingIn);
 
         if(localStorage.getItem('user')){
-            return(<Redirect to='/' />);
+            return(<Redirect to='/home' />);
         }
 
         const { email, password, submitted } = this.state;
