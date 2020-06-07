@@ -26,7 +26,7 @@ class HomePage extends React.Component {
   };
 
   handleModalDelete = (id) => {
-      console.log('id: ', id);
+      
       this.setState({
           deleteId: id,
       })
@@ -63,13 +63,13 @@ class HomePage extends React.Component {
 
         <h1>List Invoices</h1>
         <div className="col-md-3 float-right">
-          {/* <Link to="/new_invoice">
+          <Link to="/new_invoice">
                         <button className="btn btn-primary float-right button-margin-tb">New</button>
-                    </Link> */}
-          <ModalForm
+                    </Link>
+          {/* <ModalForm
             buttonLabel="Add Invoice"
             addItemToState={this.addItemToState}
-          />
+          /> */}
         </div>
         <table className="table table-striped">
           <thead>
@@ -97,19 +97,13 @@ class HomePage extends React.Component {
                   <td>{row.Customer.customer_name}</td>
                   <td>{row.total_amount}</td>
                   <td>
-                    <button
-                      className="btn btn-primary button-margin-side"
-                      type="submit"
-                    >
-                      View
-                    </button>
                     <ModalForm
                       buttonLabel="Edit"
                       item={row}
                       updateState={this.props.updateState}
                     />
                     <button
-                      className="btn btn-primary button-margin-side"
+                      className="btn btn-danger button-margin-side"
                       onClick={() => this.handleModalDelete(row.id)}
                     >
                       Delete
