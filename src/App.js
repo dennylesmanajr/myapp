@@ -9,6 +9,7 @@ import { LoginPage } from "./components/loginComponent";
 import { HomePage } from "./containers/HomePage";
 import { NewInvoicePage } from "./containers/NewInvoicePage";
 import { ReportPage } from "./containers/ReportPage";
+import { ViewInvoicePage } from "./containers/ViewInvoicePage";
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -106,6 +107,7 @@ class App extends React.Component {
                             <Route path="/login" component={LoginPage} />
                             <PrivateRoute exact path="/home" component={HomePage} />
                             <PrivateRoute exact path="/new_invoice" component={NewInvoicePage} />
+                            <PrivateRoute path="/invoice/:id" component={ViewInvoicePage} />
                             <PrivateRoute exact path="/report" component={ReportPage} />
                           </Switch>
                     </Router>

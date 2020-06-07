@@ -13,6 +13,7 @@ export const invoiceActions = {
     addInvoiceDetail,
     editInvoiceDetail,
     deleteInvoiceDetail,
+    getOneInvoiceHeader,
 };
 
 
@@ -29,6 +30,21 @@ function getListInvoices () {
     function request() { return { type: invoiceContants.FETCH_LIST_INVOICES_REQUEST } }
     function success(res) {  return { type: invoiceContants.FETCH_LIST_INVOICES_SUCCESS, res } }
     function failure(error) { return { type: invoiceContants.FETCH_LIST_INVOICES_FAILURE, error } }
+}
+
+function getOneInvoiceHeader (param) {
+    return dispatch => {
+        dispatch(request());
+
+        invoiceService.getOneInvoiceHeader(param)
+        .then(response => response.json())
+        .then(data => dispatch(success(data)))
+        .catch(error => dispatch(failure(error)));
+    };
+
+    function request() { return { type: invoiceContants.FETCH_ONE_INVOICE_HEADER_REQUEST } }
+    function success(res) {  return { type: invoiceContants.FETCH_ONE_INVOICE_HEADER_SUCCESS, res } }
+    function failure(error) { return { type: invoiceContants.FETCH_ONE_INVOICE_HEADER_FAILURE, error } }
 }
 
 function getCustomerList () {

@@ -63,7 +63,19 @@ export function invoices(state = {}, action) {
       return {
         error: action.error,
       };
-    
+    case invoiceContants.FETCH_ONE_INVOICE_HEADER_REQUEST:
+      return {
+        loading: true,
+      };
+    case invoiceContants.FETCH_ONE_INVOICE_HEADER_SUCCESS:
+      return {
+        invoiceHeader: action.res.data,
+      };
+    case invoiceContants.FETCH_ONE_INVOICE_HEADER_FAILURE:
+      return {
+        error: action.error,
+      };
+
     default:
       return state;
   }

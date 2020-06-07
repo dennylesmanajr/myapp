@@ -14,6 +14,7 @@ export const invoiceService = {
     editInvoiceDetail,
     deleteInvoiceDetail,
     getListInvoicesDetail,
+    getOneInvoiceHeader,
 };
 
 function getListInvoicesService() {
@@ -26,8 +27,8 @@ function getListInvoicesService() {
 }
 
 // function getListInvoices() {
-//     console.log('password: ', password);
-//     console.log('email: ', email);
+//     
+//     
 //     const requestOptions = {
 //         method: 'GET',
 //         headers: { 'Content-Type': 'application/json'},
@@ -37,7 +38,7 @@ function getListInvoicesService() {
 //     return fetch(`http://localhost:8000/api/v1/login`, requestOptions)
 //         .then(handleResponse)
 //         .then(user => {
-//             console.log('user: ', user);
+//             
 //             // login successful if there's a jwt token in the response
 //             if (user.data) {
 //                 // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -58,7 +59,7 @@ function getListCustomers() {
 }
 
 function addInvoice(param) {
-    console.log('param: ', param);
+    
     const requestOptions = {
         method: 'POST',
         headers: authHeader(),
@@ -72,7 +73,7 @@ function addInvoice(param) {
 
 
 function editInvoice(param) {
-    console.log('param: ', param);
+    
     const requestOptions = {
         method: 'PUT',
         headers: authHeader(),
@@ -128,7 +129,7 @@ function getListInvoicesReport() {
 
 
 function addInvoiceDetail(param) {
-    console.log('param: ', param);
+    
     const requestOptions = {
         method: 'POST',
         headers: authHeader(),
@@ -142,7 +143,7 @@ function addInvoiceDetail(param) {
 
 
 function editInvoiceDetail(param) {
-    console.log('param: ', param);
+    
     const requestOptions = {
         method: 'PUT',
         headers: authHeader(),
@@ -169,11 +170,23 @@ function deleteInvoiceDetail(param) {
 
 
 function getListInvoicesDetail(data) {
-    console.log('data: ', data);
+    
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
 
     return fetch(`http://localhost:8000/api/v1/invoicedetail?invoice_id=${encodeURIComponent(data.invoice_id)}`, requestOptions);
+}
+
+
+function getOneInvoiceHeader(param) {
+    console.log('param: ', param);
+    
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoice/`+param, requestOptions);
 }

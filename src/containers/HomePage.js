@@ -88,7 +88,10 @@ class HomePage extends React.Component {
                 //     {user.firstName + ' ' + user.lastName}
                 // </li>
                 <tr key={index}>
-                  <th scope="row">{row.invoice_number}</th>
+                  
+                  
+                  <th scope="row"><Link to={`/invoice/${row.id}`}>{row.invoice_number}</Link></th>
+                    
                   <td>
                     {moment(row.invoice_date).format(
                       process.env.REACT_APP_FORMAT_DATE
