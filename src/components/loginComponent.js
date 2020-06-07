@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { Redirect } from 'react-router-dom';
 import { userActions } from '../actions';
 
 class LoginPage extends React.Component {
@@ -43,7 +43,16 @@ class LoginPage extends React.Component {
     }
 
     render() {
+        console.log('render: ');
+
+        // if(this.props.)
         const { loggingIn } = this.props;
+        console.log('loggingIn: ', loggingIn);
+
+        if(localStorage.getItem('user')){
+            return(<Redirect to='/' />);
+        }
+
         const { email, password, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">

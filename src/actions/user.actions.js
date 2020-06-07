@@ -1,7 +1,11 @@
+import {
+    push,
+  } from "react-router-dom";
 import { userConstants } from '../constants';
 import { userService } from '../services';
 import { alertActions } from './';
-import { history } from '../helpers';
+// import { history } from '../helpers';
+
 
 export const userActions = {
     login,
@@ -9,7 +13,12 @@ export const userActions = {
     getAll
 };
 
+// let history = useHistory();
+
 function login(email, password) {
+    
+    
+
     return dispatch => {
         dispatch(request({ email }));
 
@@ -17,7 +26,7 @@ function login(email, password) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/');
+                    // history.push('/');
                 },
                 error => {
                     dispatch(failure(error));

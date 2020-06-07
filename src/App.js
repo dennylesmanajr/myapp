@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { history } from './helpers';
 import { alertActions } from './actions';
-import { PrivateRoute } from './components/privateRoute';
+import { PrivateRoute } from './components/PrivateRoute';
 import { LoginPage } from "./components/loginComponent";
+import { HomePage } from "./containers/HomePage";
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,11 +34,16 @@ class App extends React.Component {
                     {alert.message &&
                         <div className={`alert ${alert.type}`}>{alert.message}</div>
                     }
-                    <Router history={history}>
-                        <div>
-                            <PrivateRoute exact path="/" component={LoginPage} />
+                    <Router>
+                        {/* <div>
                             <Route path="/login" component={LoginPage} />
-                        </div>
+                            <PrivateRoute exact path="/" component={HomePage} />
+                            
+                        </div> */}
+                          <Switch>
+                            <Route path="/login" component={LoginPage} />
+                            <PrivateRoute exact path="/" component={HomePage} />
+                          </Switch>
                     </Router>
                 </div>
             </div>
