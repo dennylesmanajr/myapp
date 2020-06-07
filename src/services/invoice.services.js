@@ -9,6 +9,7 @@ export const invoiceService = {
     editInvoice,
     getListInvoicesService,
     deleteInvoice,
+    getListInvoicesReport,
 };
 
 function getListInvoicesService() {
@@ -109,4 +110,14 @@ function handleResponse(response) {
 
         return data;
     });
+}
+
+
+function getListInvoicesReport() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoice/report`, requestOptions);
 }

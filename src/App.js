@@ -8,6 +8,7 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { LoginPage } from "./components/loginComponent";
 import { HomePage } from "./containers/HomePage";
 import { NewInvoicePage } from "./containers/NewInvoicePage";
+import { ReportPage } from "./containers/ReportPage";
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -74,8 +75,8 @@ class App extends React.Component {
                               </li>
                             )} */}
                             <li className="nav-item">
-                                <Link to={"/user"} className="nav-link">
-                                  User
+                                <Link to={"/report"} className="nav-link">
+                                  Report
                                 </Link>
                               </li>
                               <li className="nav-item">
@@ -105,6 +106,7 @@ class App extends React.Component {
                             <Route path="/login" component={LoginPage} />
                             <PrivateRoute exact path="/home" component={HomePage} />
                             <PrivateRoute exact path="/new_invoice" component={NewInvoicePage} />
+                            <PrivateRoute exact path="/report" component={ReportPage} />
                           </Switch>
                     </Router>
                 </div>

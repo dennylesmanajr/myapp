@@ -63,6 +63,18 @@ export function invoices(state = {}, action) {
       return {
         error: action.error,
       };
+    case invoiceContants.REPORT_INVOICE_REQUEST:
+      return {
+        loading: true,
+      };
+    case invoiceContants.REPORT_INVOICE_SUCCESS:
+      return {
+        reportList: action.res,
+      };
+    case invoiceContants.REPORT_INVOICE_FAILURE:
+      return {
+        error: action.error,
+      };
     default:
       return state;
   }

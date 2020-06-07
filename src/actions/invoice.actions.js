@@ -8,6 +8,7 @@ export const invoiceActions = {
     addInvoice,
     editInvoice,
     deleteInvoice,
+    getListInvoicesReport,
 };
 
 
@@ -143,4 +144,21 @@ function deleteInvoice (param) {
     // function request_list() { return { type: invoiceContants.FETCH_LIST_CUSTOMERS_REQUEST } }
     function success_list(res) {  return { type: invoiceContants.FETCH_LIST_INVOICES_SUCCESS, res } }
     function failure_list(error) { return { type: invoiceContants.FETCH_LIST_INVOICES_FAILURE, error } }
+}
+
+
+
+function getListInvoicesReport () {
+    return dispatch => {
+        dispatch(request());
+
+        invoiceService.getListInvoicesReport()
+        .then(response => response.json())
+        .then(data => dispatch(success(data)))
+        .catch(error => dispatch(failure(error)));
+    };
+
+    function request() { return { type: invoiceContants.REPORT_INVOICE_REQUEST } }
+    function success(res) {  return { type: invoiceContants.REPORT_INVOICE_SUCCESS, res } }
+    function failure(error) { return { type: invoiceContants.REPORT_INVOICE_FAILURE, error } }
 }
