@@ -7,6 +7,7 @@ import { alert } from './alert.reducer';
 import { invoices } from './invoice.reducer';
 import { invoicesDetail } from './invoicedetail.reducer';
 import { items } from './items.reducer';
+import { customer } from './customer.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   invoices,
   invoicesDetail,
   items,
+  customer,
 });
 
 export default rootReducer;

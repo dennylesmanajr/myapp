@@ -15,18 +15,6 @@ export function invoices(state = {}, action) {
       return {
         error: action.error,
       };
-    case invoiceContants.FETCH_LIST_CUSTOMERS_REQUEST:
-      return {
-        loading: true,
-      };
-    case invoiceContants.FETCH_LIST_CUSTOMERS_SUCCESS:
-      return {
-        customer: action.res,
-      };
-    case invoiceContants.FETCH_LIST_CUSTOMERS_FAILURE:
-      return {
-        error: action.error,
-      };
     case invoiceContants.ADD_INVOICE_REQUEST:
       return {
         loading: true,

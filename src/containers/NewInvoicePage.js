@@ -72,8 +72,7 @@ class NewInvoicePage extends React.Component {
   };
 
   render() {
-    const { invoices } = this.props;
-    console.log('invoices: ', invoices);
+    const { invoices,customer } = this.props;
 
     return (
       <div className="col-md-12">
@@ -132,8 +131,9 @@ class NewInvoicePage extends React.Component {
                       : this.state.customer_id
                   }
                 >
-                  {invoices.customer &&
-                    invoices.customer.data.map((row, index) => (
+                  <option key={0} value=''>Choose Customer</option>
+                  {customer.customer &&
+                    customer.customer.data.map((row, index) => (
                       <option key={index} value={row.id}>
                         {row.customer_name}
                       </option>
@@ -148,7 +148,7 @@ class NewInvoicePage extends React.Component {
                   type="text"
                   name="total_amount"
                   id="total_amount"
-                  placeholder="Total Amount"
+                  disabled
                 />
               </FormGroup>
             </Col>
@@ -212,9 +212,10 @@ class NewInvoicePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { invoices } = state;
+  const { invoices, customer } = state;
   return {
     invoices,
+    customer,
   };
 }
 
