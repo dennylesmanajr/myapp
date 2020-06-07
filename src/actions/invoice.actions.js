@@ -231,10 +231,14 @@ function addInvoiceDetail (param) {
         invoiceService.addInvoiceDetail(param)
             .then(
                 res => { 
-                    
-                    
+                    console.log('res: ', res);
                     dispatch(success(res));
                     dispatch(alertActions.success(res.message));
+
+                    invoiceService.getListInvoicesDetail(res.data)
+                    .then(response => response.json())
+                    .then(data => dispatch(success_list(data)))
+                    .catch(error => dispatch(failure_list(error)));
                     
                     // history.push('/');
                 },
@@ -248,6 +252,10 @@ function addInvoiceDetail (param) {
     function request() { return { type: invoiceContants.ADD_INVOICE_DETAIL_REQUEST } }
     function success(res) { return { type: invoiceContants.ADD_INVOICE_DETAIL_SUCCESS, res } }
     function failure(error) { return { type: invoiceContants.ADD_INVOICE_DETAIL_FAILURE, error } }
+
+    // function request_list() { return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_REQUEST } }
+    function success_list(res) {  return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_SUCCESS, res } }
+    function failure_list(error) { return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_FAILURE, error } }
 }
 
 

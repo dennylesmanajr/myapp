@@ -72,7 +72,8 @@ class NewInvoicePage extends React.Component {
   };
 
   render() {
-    const { invoices,customer } = this.props;
+    const { invoices,customer, invoicesDetail } = this.props;
+    console.log('invoicesDetail: ', invoicesDetail);
 
     return (
       <div className="col-md-12">
@@ -186,24 +187,19 @@ class NewInvoicePage extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {/* {invoices.reportList &&
-                invoices.reportList.data.map((row, index) => (
+             {invoicesDetail.invoiceDetailList &&
+                invoicesDetail.invoiceDetailList.data.map((row, index) => (
                     // <li key={user.id}>
                     //     {user.firstName + ' ' + user.lastName}
                     // </li>
                     <tr key={index}>
-                    <td>{row.Customer.customer_name}</td>
-                    <td>{row.Customer.customer_phone}</td>
-                    <td>{row.invoice_number}</td>
-                    
-                    <td>
-                        {moment(row.invoice_date).format(
-                        process.env.REACT_APP_FORMAT_DATE
-                        )}
-                    </td>
-                    <td>{row.total_amount}</td>
+                      <td>{row.Item.item_id}</td>
+                    <td>{row.Item.item_name}</td>
+                    <td>{row.qty}</td>
+                    <td>{row.Item.unit_price}</td>
+                    <td>{row.amount}</td>
                     </tr>
-                ))} */}
+                ))} 
           </tbody>
         </table>
       </div>
@@ -212,10 +208,11 @@ class NewInvoicePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { invoices, customer } = state;
+  const { invoices, customer, invoicesDetail } = state;
   return {
     invoices,
     customer,
+    invoicesDetail,
   };
 }
 

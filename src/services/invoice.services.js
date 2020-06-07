@@ -168,11 +168,12 @@ function deleteInvoiceDetail(param) {
 }
 
 
-function getListInvoicesDetail() {
+function getListInvoicesDetail(data) {
+    console.log('data: ', data);
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
 
-    return fetch(`http://localhost:8000/api/v1/invoicedetail`, requestOptions);
+    return fetch(`http://localhost:8000/api/v1/invoicedetail?invoice_id=${encodeURIComponent(data.invoice_id)}`, requestOptions);
 }
