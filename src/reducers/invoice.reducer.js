@@ -75,6 +75,7 @@ export function invoices(state = {}, action) {
       return {
         error: action.error,
       };
+    
     default:
       return state;
   }

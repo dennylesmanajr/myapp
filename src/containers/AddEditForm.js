@@ -4,16 +4,21 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { invoiceActions } from '../actions';
 
 class AddEditForm extends React.Component {
-  state = {
-    id: 0,
-    invoice_number: '',
-    invoice_date: '',
-    customer_id: '',
-    phone: '',
-    location: '',
-    hobby: ''
-  }
 
+  constructor(props){
+    super(props);
+    console.log('this.props.headerParam: ', this.props.headerParam);
+    this.state = {
+      id: 0,
+      invoice_id: this.props.headerParam.id,
+      qty: 0,
+      unit_price: 0,
+      item_ref_id: '',
+      amount: ''
+    }
+
+  }
+  
   onChange = (e) => {
     console.log('e: ', e.target.value);
     this.setState({[e.target.name]: e.target.value})
@@ -22,12 +27,13 @@ class AddEditForm extends React.Component {
   submitFormAdd = e => {
     e.preventDefault()
     const param = {
-      invoice_number: this.state.invoice_number,
-      invoice_date: this.state.invoice_date,
-      customer_id: Number(this.state.customer_id),
+      invoice_id: this.state.invoice_id,
+      item_ref_id: this.state.item_ref_id,
+      qty: Number(this.state.qty),
+      amount: Number(this.state.amount),
     }
     
-    this.props.doAddInvoice(param);
+    this.props.doAddInvoiceDetail(param);
     this.props.toggle();
     // fetch('http://localhost:3000/crud', {
     //   method: 'post',
@@ -66,7 +72,7 @@ class AddEditForm extends React.Component {
       customer_id: Number(this.state.customer_id),
     }
     
-    this.props.doEditInvoice(param);
+    this.props.doEditInvoiceDetail(param);
     this.props.toggle();
     // fetch('http://localhost:3000/crud', {
     //   method: 'put',
@@ -99,41 +105,91 @@ class AddEditForm extends React.Component {
   componentDidMount(){
     // if item exists, populate the state with proper data
     if(this.props.item){
-      const { id, invoice_number, invoice_date, customer_id } = this.props.item
-      this.setState({ id, invoice_number, invoice_date, customer_id })
+      const { id, invoice_id, qty, amount, item_ref_id } = this.props.item
+      this.setState({ id, invoice_id, qty, amount, item_ref_id })
     }
 
-    this.props.doFetchListCustomers();
+    this.props.doFetchListItems();
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.state !== prevState){
+      console.log('prevState: ', prevState);
+      console.log('this.state: ', this.state);
+
+      if(this.state.item_ref_id !== prevState.item_ref_id){
+        this.searchUnitPrice();
+      }
+
+      if(this.state.unit_price !== prevState.unit_price || this.state.qty !== prevState.qty){
+        if(this.state.unit_price > 0 && this.state.qty > 0){
+          const amount = Number(this.state.unit_price*this.state.qty).toFixed(2);
+          console.log('amount: ', amount);
+          this.setState({
+            amount
+          });
+        }
+      }
+
+
+    }
+
+  }
+
+  searchUnitPrice(){
+    if(this.props.items && this.props.items.items && this.props.items.items.data){
+      const itemRow = this.props.items.items.data.filter((row) => row.id === Number(this.state.item_ref_id));
+      if(itemRow && itemRow.length > 0){
+        this.setState({
+          unit_price: itemRow[0].unit_price,
+        })
+        return itemRow[0].unit_price;
+      }
+    }
+    
+    return '';
   }
 
   render() {
-
-    const { invoices } = this.props;
-    console.log('invoices: ', invoices);
+    console.log(this.state);
+    const { items } = this.props;
+    console.log('items: ', items);
     return (
       <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
-        <FormGroup>
+        {/* <FormGroup>
           <Label for="invoice_number">Invoice Number</Label>
           <Input type="text" name="invoice_number" id="invoice_number" onChange={this.onChange.bind(this)} value={this.state.invoice_number === null ? '' : this.state.invoice_number} />
         </FormGroup>
         <FormGroup>
           <Label for="invoice_date">Invoice Date</Label>
           <Input type="date" name="invoice_date" id="invoice_date" onChange={this.onChange.bind(this)} value={this.state.invoice_date === null ? '' : this.state.invoice_date}  />
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup>
-            <Label for="customer_id">Customer</Label>
+            <Label for="item_ref_id">Items</Label>
             <Input type="select" 
-            name="customer_id" 
-            id="customer_id"
+            name="item_ref_id" 
+            id="item_ref_id"
             onChange={this.onChange}
-            value={this.state.customer_id === null ? '' : this.state.customer_id} 
+            value={this.state.item_ref_id === null ? '' : this.state.item_ref_id} 
             >
-            {invoices.customer && invoices.customer.data.map((row, index) =>
-                <option key={index} value={row.id}>{row.customer_name}</option>
+            <option key={0} value=''>Choose Item</option>
+            {items.items && items.items.data.map((row, index) =>
+                <option key={index+1} value={row.id}>{row.item_name}</option>
             )}
             </Input>
         </FormGroup>
-        {/* <Button>Submit</Button> */}
+        <FormGroup>
+          <Label for="unit_price">Unit Price</Label>
+          <Input type="number" readOnly name="unit_price" id="unit_price" value={this.state.unit_price}  />
+        </FormGroup>
+        <FormGroup>
+          <Label for="qty">Quantity</Label>
+          <Input type="number" name="qty" id="qty" onChange={this.onChange} value={this.state.invoice_date === null ? '' : this.state.invoice_date}  />
+        </FormGroup>
+        <FormGroup>
+          <Label for="amount">Amount</Label>
+          <Input type="text" pattern="[0-9]*" readOnly name="amount" id="amount" value={this.state.amount}  />
+        </FormGroup>
         <Button className="float-right button-margin-tb" onClick={this.toggle}>Submit</Button>
       </Form>
     );
@@ -141,10 +197,10 @@ class AddEditForm extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { invoices } = state;
+    const { items } = state;
     // const { user } = authentication;
     return {
-        invoices,
+      items,
         // users,
         // home,
     };
@@ -152,9 +208,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        doFetchListCustomers: () => dispatch(invoiceActions.getCustomerList()),
-        doAddInvoice: (data) => dispatch(invoiceActions.addInvoice(data)),
-        doEditInvoice: (data) => dispatch(invoiceActions.editInvoice(data)),
+        doFetchListItems: () => dispatch(invoiceActions.getListItems()),
+        doAddInvoiceDetail: (data) => dispatch(invoiceActions.addInvoiceDetail(data)),
+        doEditInvoiceDetail: (data) => dispatch(invoiceActions.editInvoiceDetail(data)),
     }
 }
 

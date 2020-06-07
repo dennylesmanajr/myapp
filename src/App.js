@@ -40,7 +40,7 @@ class App extends React.Component {
                         <div className={`alert ${alert.type}`}>{alert.message}</div>
                     }
                     <Router>
-                        {authentication.loggedIn && <nav className="navbar navbar-expand navbar-dark bg-dark">
+                        {authentication.loggedIn && <nav className="navbar navbar-expand navbar-dark bg-dark navbar-wrapper">
                           <Link to={"/"} className="navbar-brand">
                             My App
                           </Link>

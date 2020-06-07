@@ -20,6 +20,7 @@ class ModalForm extends Component {
       const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>
 
       const label = this.props.buttonLabel
+      const disabled = this.props.buttonDisabled
 
       let button = ''
       let title = ''
@@ -55,7 +56,9 @@ class ModalForm extends Component {
               addItemToState={this.props.addItemToState}
               updateState={this.props.updateState}
               toggle={this.toggle}
-              item={this.props.item} />
+              item={this.props.item}
+              headerParam={this.props.headerParam}
+              />
           </ModalBody>
         </Modal>
       </div>

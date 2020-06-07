@@ -6,6 +6,7 @@ import { Button, Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import moment from "moment";
 // import { homeActions } from '../actions';
 import { invoiceActions } from "../actions";
+import ModalForm from "../components/ModalForm";
 
 class NewInvoicePage extends React.Component {
   state = {
@@ -21,12 +22,24 @@ class NewInvoicePage extends React.Component {
   componentDidMount() {
     // this.props.dispatch(userActions.getAll());
     // this.props.doFetchListInvoices();
-    if(this.props.item){
-        const { id, invoice_number, invoice_date, customer_id, total_amount } = this.props.item
-        this.setState({ id, invoice_number, invoice_date, customer_id, total_amount, })
-      }
-  
-      this.props.doFetchListCustomers();
+    if (this.props.item) {
+      const {
+        id,
+        invoice_number,
+        invoice_date,
+        customer_id,
+        total_amount,
+      } = this.props.item;
+      this.setState({
+        id,
+        invoice_number,
+        invoice_date,
+        customer_id,
+        total_amount,
+      });
+    }
+
+    this.props.doFetchListCustomers();
   }
 
   onChange = (e) => {
@@ -39,7 +52,7 @@ class NewInvoicePage extends React.Component {
       invoice_number: this.state.invoice_number,
       invoice_date: this.state.invoice_date,
       customer_id: Number(this.state.customer_id),
-      total_amount: Number(this.state.total_amount)
+      total_amount: Number(this.state.total_amount),
     };
 
     this.props.doAddInvoice(param);
@@ -60,12 +73,14 @@ class NewInvoicePage extends React.Component {
 
   render() {
     const { invoices } = this.props;
+    console.log('invoices: ', invoices);
 
     return (
       <div className="col-md-12">
         <h1>New Invoice</h1>
         <Form
           onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}
+          className="form-wrapper"
         >
           <Row form>
             <Col md={6}>
@@ -139,15 +154,58 @@ class NewInvoicePage extends React.Component {
             </Col>
           </Row>
 
-          
           {/* <Button>Submit</Button> */}
-          <Button
-            className="float-right button-margin-side"
-            type="submit"
-          >
+          <Button className="float-right button-margin-side" type="submit">
             Save
           </Button>
         </Form>
+
+        <h1>Detail Invoice</h1>
+        {/* {this.props.invoices && 
+            this.props.invoices.invoiceHeader && 
+            this.props.invoices.invoiceHeader.data && 
+            this.props.invoices.invoiceHeader.data.id &&  */}
+            <FormGroup>
+            <ModalForm
+                buttonLabel="New"
+                addItemToState={this.addItemToState}
+                headerParam={invoices && invoices.invoiceHeader ? invoices.invoiceHeader.data:{}}
+            />
+            </FormGroup>
+            {/* } */}
+
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Item ID</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* {invoices.reportList &&
+                invoices.reportList.data.map((row, index) => (
+                    // <li key={user.id}>
+                    //     {user.firstName + ' ' + user.lastName}
+                    // </li>
+                    <tr key={index}>
+                    <td>{row.Customer.customer_name}</td>
+                    <td>{row.Customer.customer_phone}</td>
+                    <td>{row.invoice_number}</td>
+                    
+                    <td>
+                        {moment(row.invoice_date).format(
+                        process.env.REACT_APP_FORMAT_DATE
+                        )}
+                    </td>
+                    <td>{row.total_amount}</td>
+                    </tr>
+                ))} */}
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -165,8 +223,8 @@ const mapDispatchToProps = (dispatch) => {
     // doFetchListInvoices: () => dispatch(homeActions.getListInvoices()),
     doFetchListCustomers: () => dispatch(invoiceActions.getCustomerList()),
     doAddInvoice: (data) => dispatch(invoiceActions.addInvoice(data)),
-        doEditInvoice: (data) => dispatch(invoiceActions.editInvoice(data)),
-};
+    doEditInvoice: (data) => dispatch(invoiceActions.editInvoice(data)),
+  };
 };
 
 const connectedNewInvoicePage = connect(

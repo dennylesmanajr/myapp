@@ -10,6 +10,10 @@ export const invoiceService = {
     getListInvoicesService,
     deleteInvoice,
     getListInvoicesReport,
+    addInvoiceDetail,
+    editInvoiceDetail,
+    deleteInvoiceDetail,
+    getListInvoicesDetail,
 };
 
 function getListInvoicesService() {
@@ -120,4 +124,55 @@ function getListInvoicesReport() {
     };
 
     return fetch(`http://localhost:8000/api/v1/invoice/report`, requestOptions);
+}
+
+
+function addInvoiceDetail(param) {
+    console.log('param: ', param);
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify({ ...param })
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoicedetail`, requestOptions)
+        .then(handleResponse)
+        .then(res => {return res;});
+}
+
+
+function editInvoiceDetail(param) {
+    console.log('param: ', param);
+    const requestOptions = {
+        method: 'PUT',
+        headers: authHeader(),
+        body: JSON.stringify({ ...param })
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoicedetail/`+param.id, requestOptions)
+        .then(handleResponse)
+        .then(res => {return res;});
+}
+
+
+
+function deleteInvoiceDetail(param) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoicedetail/`+param, requestOptions)
+        .then(handleResponse)
+        .then(res => {return res;});
+}
+
+
+function getListInvoicesDetail() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoicedetail`, requestOptions);
 }
