@@ -9,10 +9,12 @@ class LoginPage extends React.Component {
         super(props);
 
         // reset login status
-        this.props.dispatch(userActions.logout());
+        // this.props.dispatch(userActions.logout());
+        
+        this.props.doLogout();
 
         this.state = {
-            username: '',
+            email: '',
             password: '',
             submitted: false
         };
@@ -30,27 +32,28 @@ class LoginPage extends React.Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { username, password } = this.state;
+        const { email, password } = this.state;
         const { dispatch } = this.props;
-        if (username && password) {
+        if (email && password) {
             console.log('password: ', password);
-            console.log('username: ', username);
-            dispatch(userActions.login(username, password));
+            console.log('email: ', email);
+            // dispatch(userActions.login(email, password));
+            this.props.doFetchLogin(email, password);;
         }
     }
 
     render() {
         const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
+        const { email, password, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
+                    <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                        <label htmlFor="email">email</label>
+                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
+                        {submitted && !email &&
+                            <div className="help-block">Email is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
@@ -79,5 +82,12 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        doFetchLogin: (email, password) => dispatch(userActions.login(email, password)),
+        doLogout: () => dispatch(userActions.logout())
+    }
+}
+
+const connectedLoginPage = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
 export { connectedLoginPage as LoginPage }; 
