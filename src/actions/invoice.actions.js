@@ -6,7 +6,8 @@ export const invoiceActions = {
     getListInvoices,
     getCustomerList,
     addInvoice,
-    editInvoice
+    editInvoice,
+    deleteInvoice,
 };
 
 
@@ -103,4 +104,43 @@ function addInvoice (param) {
     function request() { return { type: invoiceContants.ADD_INVOICE_REQUEST } }
     function success(res) { return { type: invoiceContants.ADD_INVOICE_SUCCESS, res } }
     function failure(error) { return { type: invoiceContants.ADD_INVOICE_FAILURE, error } }
+}
+
+
+
+function deleteInvoice (param) {
+    
+    return dispatch => {
+        dispatch(request());
+
+        // invoiceService.addInvoice(invoice_number, invoice_date,customer_id)
+        // .then(response => response.json())
+        // .then(data => dispatch(success(data)))
+        // .catch(error => dispatch(failure(error)));
+
+        invoiceService.deleteInvoice(param)
+            .then(
+                res => { 
+                    dispatch(success(res));
+                    dispatch(alertActions.success(res.message));
+
+                    invoiceService.getListInvoicesService()
+                    .then(response => response.json())
+                    .then(data => dispatch(success_list(data)))
+                    .catch(error => dispatch(failure_list(error)));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request() { return { type: invoiceContants.DELETE_INVOICE_REQUEST } }
+    function success(res) { return { type: invoiceContants.DELETE_INVOICE_SUCCESS, res } }
+    function failure(error) { return { type: invoiceContants.DELETE_INVOICE_FAILURE, error } }
+    
+    // function request_list() { return { type: invoiceContants.FETCH_LIST_CUSTOMERS_REQUEST } }
+    function success_list(res) {  return { type: invoiceContants.FETCH_LIST_INVOICES_SUCCESS, res } }
+    function failure_list(error) { return { type: invoiceContants.FETCH_LIST_INVOICES_FAILURE, error } }
 }

@@ -8,6 +8,7 @@ export const invoiceService = {
     addInvoice,
     editInvoice,
     getListInvoicesService,
+    deleteInvoice,
 };
 
 function getListInvoicesService() {
@@ -74,6 +75,19 @@ function editInvoice(param) {
     };
 
     return fetch(`http://localhost:8000/api/v1/invoice/`+param.id, requestOptions)
+        .then(handleResponse)
+        .then(res => {return res;});
+}
+
+
+
+function deleteInvoice(param) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:8000/api/v1/invoice/`+param, requestOptions)
         .then(handleResponse)
         .then(res => {return res;});
 }

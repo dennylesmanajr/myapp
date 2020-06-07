@@ -5,15 +5,15 @@ export function invoices(state = {}, action) {
   switch (action.type) {
     case invoiceContants.FETCH_LIST_INVOICES_REQUEST:
       return {
-        loading: true
+        loading: true,
       };
     case invoiceContants.FETCH_LIST_INVOICES_SUCCESS:
       return {
-        items: action.res
+        items: action.res,
       };
     case invoiceContants.FETCH_LIST_INVOICES_FAILURE:
-      return { 
-        error: action.error
+      return {
+        error: action.error,
       };
     case invoiceContants.FETCH_LIST_CUSTOMERS_REQUEST:
       return {
@@ -48,6 +48,18 @@ export function invoices(state = {}, action) {
         invoiceHeader: action.res,
       };
     case invoiceContants.EDIT_INVOICE_FAILURE:
+      return {
+        error: action.error,
+      };
+    case invoiceContants.DELETE_INVOICE_REQUEST:
+      return {
+        loading: true,
+      };
+    case invoiceContants.DELETE_INVOICE_SUCCESS:
+      return {
+        invoiceHeader: action.res,
+      };
+    case invoiceContants.DELETE_INVOICE_FAILURE:
       return {
         error: action.error,
       };
