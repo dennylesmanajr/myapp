@@ -221,6 +221,10 @@ function editInvoiceDetail (param) {
                     
                     dispatch(success(res));
                     dispatch(alertActions.success(res.message));
+                    invoiceService.getListInvoicesDetail(res.data)
+                    .then(response => response.json())
+                    .then(data => dispatch(success_list(data)))
+                    .catch(error => dispatch(failure_list(error)));
                     // history.push('/');
                 },
                 error => {
@@ -233,6 +237,9 @@ function editInvoiceDetail (param) {
     function request() { return { type: invoiceContants.EDIT_INVOICE_DETAIL_REQUEST } }
     function success(res) { return { type: invoiceContants.EDIT_INVOICE_DETAIL_SUCCESS, res } }
     function failure(error) { return { type: invoiceContants.EDIT_INVOICE_DETAIL_FAILURE, error } }
+
+    function success_list(res) {  return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_SUCCESS, res } }
+    function failure_list(error) { return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_FAILURE, error } }
 }
 
 
@@ -280,6 +287,7 @@ function addInvoiceDetail (param) {
 
 
 function deleteInvoiceDetail (param) {
+    console.log('param: ', param);
     
     return dispatch => {
         dispatch(request());
@@ -289,13 +297,13 @@ function deleteInvoiceDetail (param) {
         // .then(data => dispatch(success(data)))
         // .catch(error => dispatch(failure(error)));
 
-        invoiceService.deleteInvoiceDetail(param)
+        invoiceService.deleteInvoiceDetail(param.id)
             .then(
                 res => { 
                     dispatch(success(res));
                     dispatch(alertActions.success(res.message));
 
-                    invoiceService.getListInvoicesService()
+                    invoiceService.getListInvoicesDetail(param)
                     .then(response => response.json())
                     .then(data => dispatch(success_list(data)))
                     .catch(error => dispatch(failure_list(error)));
@@ -312,8 +320,8 @@ function deleteInvoiceDetail (param) {
     function failure(error) { return { type: invoiceContants.DELETE_INVOICE_DETAIL_FAILURE, error } }
     
     // function request_list() { return { type: invoiceContants.FETCH_LIST_CUSTOMERS_REQUEST } }
-    function success_list(res) {  return { type: invoiceContants.FETCH_LIST_INVOICES_SUCCESS, res } }
-    function failure_list(error) { return { type: invoiceContants.FETCH_LIST_INVOICES_FAILURE, error } }
+    function success_list(res) {  return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_SUCCESS, res } }
+    function failure_list(error) { return { type: invoiceContants.FETCH_LIST_INVOICE_DETAIL_FAILURE, error } }
 }
 
 

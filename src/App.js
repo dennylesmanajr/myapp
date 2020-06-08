@@ -13,7 +13,6 @@ import { ViewInvoicePage } from "./containers/ViewInvoicePage";
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { EditInvoicePage } from "./containers/EditInvoicePage";
 // import { render } from "@testing-library/react";
 
 class App extends React.Component {

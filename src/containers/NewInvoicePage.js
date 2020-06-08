@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Button, Form, FormGroup, Label, Input, Row, Col, FormFeedback } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import moment from "moment";
 // import { homeActions } from '../actions';
 import { invoiceActions } from "../actions";
@@ -18,6 +18,8 @@ class NewInvoicePage extends React.Component {
     location: "",
     hobby: "",
     editMode: false,
+    deleteId: '',
+    showModalDelete: false,
   };
 
   componentDidMount() {
@@ -86,6 +88,29 @@ class NewInvoicePage extends React.Component {
 
     this.props.doEditInvoice(param);
   };
+
+  toggle = () => {
+    this.setState((prevState) => ({
+      showModalDelete: !prevState.showModalDelete,
+    }));
+  };
+
+  handleModalDelete = (id) => {
+    console.log('handleModalDelete: ');
+      
+    this.setState({
+        deleteId: id,
+    })
+    this.toggle();
+}
+
+  handleDelete(){
+    this.props.doDeleteInvoiceDetail({
+      id: this.state.deleteId,
+      invoice_id: this.state.id,
+    });
+    this.toggle();
+  }
 
   render() {
     const { invoices,customer, invoicesDetail } = this.props;
@@ -222,6 +247,7 @@ class NewInvoicePage extends React.Component {
                           buttonLabel="Edit"
                           item={row}
                           updateState={this.props.updateState}
+                          headerParam={invoices && invoices.invoiceHeader ? invoices.invoiceHeader[0]:{}}
                         />
                         <button
                           className="btn btn-danger button-margin-side"
@@ -234,6 +260,20 @@ class NewInvoicePage extends React.Component {
                 ))} 
           </tbody>
         </table>
+        <Modal isOpen={this.state.showModalDelete} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>Delete Invoice Detail</ModalHeader>
+          <ModalBody>
+            Are you sure want to delete invoice detail ?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={() => this.handleDelete()}>
+              Yes
+            </Button>{" "}
+            <Button color="secondary" onClick={this.toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
@@ -258,6 +298,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(invoiceActions.getOneInvoiceHeader(param)),
     doFetchListInvoicesDetail: (param) =>
       dispatch(invoiceActions.getListInvoicesDetail(param)),
+    doDeleteInvoiceDetail: (param) => dispatch(invoiceActions.deleteInvoiceDetail(param)),
   };
 };
 

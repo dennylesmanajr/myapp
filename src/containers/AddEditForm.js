@@ -7,10 +7,10 @@ class AddEditForm extends React.Component {
 
   constructor(props){
     super(props);
-    
+    console.log('this.props.headerParam: ', this.props.headerParam);
     this.state = {
       id: 0,
-      invoice_id: this.props.headerParam.id,
+      invoice_id: 0,
       qty: 0,
       unit_price: 0,
       item_ref_id: '',
@@ -27,8 +27,7 @@ class AddEditForm extends React.Component {
   submitFormAdd = e => {
     e.preventDefault()
     const param = {
-      invoice_id: this.state.invoice_id,
-      
+      invoice_id: this.state.invoice_id !== 0 ? this.state.invoice_id : this.props.headerParam.id,
       item_ref_id: this.state.item_ref_id,
       qty: Number(this.state.qty),
       amount: Number(this.state.amount),
@@ -67,10 +66,11 @@ class AddEditForm extends React.Component {
   submitFormEdit = e => {
     e.preventDefault()
     const param = {
-      id: this.state.invoice,
-      invoice_number: this.state.invoice_number,
-      invoice_date: this.state.invoice_date,
-      customer_id: Number(this.state.customer_id),
+      id: this.state.id,
+      invoice_id: this.state.invoice_id,
+      item_ref_id: this.state.item_ref_id,
+      qty: Number(this.state.qty),
+      amount: Number(this.state.amount),
     }
     
     this.props.doEditInvoiceDetail(param);
@@ -107,7 +107,9 @@ class AddEditForm extends React.Component {
     // if item exists, populate the state with proper data
     if(this.props.item){
       const { id, invoice_id, qty, amount, item_ref_id } = this.props.item
-      this.setState({ id, invoice_id, qty, amount, item_ref_id })
+      console.log('this.props.item: ', this.props.item);
+
+      this.setState({ id, invoice_id, qty, amount, item_ref_id, unit_price:this.props.item.Item.unit_price,  })
     }
 
     this.props.doFetchListItems();
@@ -185,7 +187,7 @@ class AddEditForm extends React.Component {
         </FormGroup>
         <FormGroup>
           <Label for="qty">Quantity</Label>
-          <Input type="number" name="qty" id="qty" onChange={this.onChange} value={this.state.invoice_date === null ? '' : this.state.invoice_date}  />
+          <Input type="number" name="qty" id="qty" onChange={this.onChange} value={this.state.qty === null ? '' : this.state.qty}  />
         </FormGroup>
         <FormGroup>
           <Label for="amount">Amount</Label>
