@@ -43,7 +43,7 @@ class HomePage extends React.Component {
 
     return (
       <div className="col-md-12">
-        <h1>Hi {user.firstName}!</h1>
+        {/* <h1>Hi {user.firstName}!</h1>
         <p>You're logged in with React & JWT!!</p>
         <h3>Users from secure api end point:</h3>
         {users.loading && <em>Loading users...</em>}
@@ -59,7 +59,7 @@ class HomePage extends React.Component {
         )}
         <p>
           <Link to="/login">Logout</Link>
-        </p>
+        </p> */}
 
         <h1>List Invoices</h1>
         <div className="col-md-3 float-right">

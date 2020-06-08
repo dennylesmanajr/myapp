@@ -97,9 +97,10 @@ class App extends React.Component {
                                   <span className="navbar-brand mb-0 h1">{authentication.user.email}</span>
                               </li>
                               <li className="nav-item">
-                                <a href="/login" className="nav-link" onClick={this.logOut}>
-                                  LogOut
-                                </a>
+                                {/* <a href="/login" className="nav-link">
+                                  logout
+                                </a> */}
+                                <Link to="/login" className="nav-link">Logout</Link>
                               </li>
                             </div>
                         </nav>}

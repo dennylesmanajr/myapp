@@ -55,6 +55,7 @@ class LoginPage extends React.Component {
 
         const { email, password, submitted } = this.state;
         return (
+            <div className="row justify-content-md-center login-wrapper">
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
@@ -80,6 +81,7 @@ class LoginPage extends React.Component {
                     </div>
                 </form>
             </div>
+        </div>
         );
     }
 }
