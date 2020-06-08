@@ -181,7 +181,7 @@ function getListInvoicesDetail(data) {
 
 
 function getOneInvoiceHeader(param) {
-    console.log('param: ', param);
+    
     
     const requestOptions = {
         method: 'GET',

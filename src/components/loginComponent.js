@@ -35,19 +35,19 @@ class LoginPage extends React.Component {
         const { email, password } = this.state;
         const { dispatch } = this.props;
         if (email && password) {
-            console.log('password: ', password);
-            console.log('email: ', email);
+            
+            
             // dispatch(userActions.login(email, password));
             this.props.doFetchLogin(email, password);;
         }
     }
 
     render() {
-        console.log('render: ');
+        
 
         // if(this.props.)
         const { loggingIn } = this.props;
-        console.log('loggingIn: ', loggingIn);
+        
 
         if(localStorage.getItem('user')){
             return(<Redirect to='/home' />);

@@ -57,7 +57,7 @@ class EditInvoicePage extends React.Component {
 
   render() {
     const { invoices,customer, invoicesDetail } = this.props;
-    console.log('invoicesDetail: ', invoicesDetail);
+    
 
     return (
       <div className="col-md-12">

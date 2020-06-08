@@ -18,6 +18,6 @@ function getListInvoices () {
     };
 
     function request() { return { type: homeConstants.FETCH_LIST_INVOICES_REQUEST } }
-    function success(res) { console.log('res > ',res); return { type: homeConstants.FETCH_LIST_INVOICES_SUCCESS, res } }
+    function success(res) {  return { type: homeConstants.FETCH_LIST_INVOICES_SUCCESS, res } }
     function failure(error) { return { type: homeConstants.FETCH_LIST_INVOICES_FAILURE, error } }
 }

@@ -31,7 +31,7 @@ class App extends React.Component {
 
   render(){
     const { alert, authentication } = this.props;
-    console.log('authentication: ', authentication);
+    
 
     
       return (

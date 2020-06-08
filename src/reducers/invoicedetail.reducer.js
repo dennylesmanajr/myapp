@@ -1,7 +1,7 @@
 import { invoiceContants } from "../constants";
 
 export function invoicesDetail(state = {}, action) {
-  console.log("action > invoices > reducer: ", action);
+  
   switch (action.type) {
     case invoiceContants.ADD_INVOICE_DETAIL_REQUEST:
       return {

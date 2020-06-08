@@ -6,8 +6,8 @@ export const itemService = {
 };
 
 // function getListInvoices() {
-//     console.log('password: ', password);
-//     console.log('email: ', email);
+//     
+//     
 //     const requestOptions = {
 //         method: 'GET',
 //         headers: { 'Content-Type': 'application/json'},
@@ -17,7 +17,7 @@ export const itemService = {
 //     return fetch(`http://localhost:8000/api/v1/login`, requestOptions)
 //         .then(handleResponse)
 //         .then(user => {
-//             console.log('user: ', user);
+//             
 //             // login successful if there's a jwt token in the response
 //             if (user.data) {
 //                 // store user details and jwt token in local storage to keep user logged in between page refreshes

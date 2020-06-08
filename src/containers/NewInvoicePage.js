@@ -21,9 +21,9 @@ class NewInvoicePage extends React.Component {
   };
 
   componentDidMount() {
-    console.log('this.props: ',this.props);
+    
     if(this.props.location.pathname.includes('edit')){
-      console.log('lagi edit nih');
+      
       this.props.doFetchInvoiceHeader(this.props.match.params.invoice_id)
       this.props.doFetchListInvoicesDetail({
         invoice_id: this.props.match.params.invoice_id,
@@ -39,10 +39,10 @@ class NewInvoicePage extends React.Component {
     if (this.props !== prevProps) {
       if(this.props.invoices !== prevProps.invoices){
         if(this.props.invoices && this.props.invoices.invoiceHeader){
-          console.log('this.props.invoices.invoiceHeader: ', this.props.invoices.invoiceHeader);
+          
 
             this.props.invoices.invoiceHeader.map((row,index) => {
-              console.log('row: ', row);
+              
               this.setState({
                 id : row.id,
                 invoice_number: row.invoice_number,
@@ -89,7 +89,7 @@ class NewInvoicePage extends React.Component {
 
   render() {
     const { invoices,customer, invoicesDetail } = this.props;
-    console.log('invoicesDetail: ', invoicesDetail);
+    
 
     return (
       <div className="col-md-12">

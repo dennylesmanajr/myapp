@@ -250,7 +250,7 @@ function addInvoiceDetail (param) {
         invoiceService.addInvoiceDetail(param)
             .then(
                 res => { 
-                    console.log('res: ', res);
+                    
                     dispatch(success(res));
                     dispatch(alertActions.success(res.message));
 

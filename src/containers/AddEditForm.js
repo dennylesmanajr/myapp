@@ -7,7 +7,7 @@ class AddEditForm extends React.Component {
 
   constructor(props){
     super(props);
-    console.log('this.props.headerParam: ', this.props.headerParam);
+    
     this.state = {
       id: 0,
       invoice_id: this.props.headerParam.id,
@@ -20,7 +20,7 @@ class AddEditForm extends React.Component {
   }
   
   onChange = (e) => {
-    console.log('e: ', e.target.value);
+    
     this.setState({[e.target.name]: e.target.value})
   }
 
@@ -28,6 +28,7 @@ class AddEditForm extends React.Component {
     e.preventDefault()
     const param = {
       invoice_id: this.state.invoice_id,
+      
       item_ref_id: this.state.item_ref_id,
       qty: Number(this.state.qty),
       amount: Number(this.state.amount),
@@ -55,10 +56,10 @@ class AddEditForm extends React.Component {
     //       this.props.addItemToState(item[0])
     //       this.props.toggle()
     //     } else {
-    //       console.log('failure')
+    //       
     //     }
     //   })
-    //   .catch(err => console.log(err))
+    //   .catch(err => 
 
     
   }
@@ -92,14 +93,14 @@ class AddEditForm extends React.Component {
     //   .then(response => response.json())
     //   .then(item => {
     //     if(Array.isArray(item)) {
-    //       // console.log(item[0])
+    //       // 
     //       this.props.updateState(item[0])
     //       this.props.toggle()
     //     } else {
-    //       console.log('failure')
+    //       
     //     }
     //   })
-    //   .catch(err => console.log(err))
+    //   .catch(err => 
   }
 
   componentDidMount(){
@@ -114,8 +115,8 @@ class AddEditForm extends React.Component {
 
   componentDidUpdate(prevProps, prevState){
     if(this.state !== prevState){
-      console.log('prevState: ', prevState);
-      console.log('this.state: ', this.state);
+      
+      
 
       if(this.state.item_ref_id !== prevState.item_ref_id){
         this.searchUnitPrice();
@@ -124,7 +125,7 @@ class AddEditForm extends React.Component {
       if(this.state.unit_price !== prevState.unit_price || this.state.qty !== prevState.qty){
         if(this.state.unit_price > 0 && this.state.qty > 0){
           const amount = Number(this.state.unit_price*this.state.qty).toFixed(2);
-          console.log('amount: ', amount);
+          
           this.setState({
             amount
           });
@@ -151,9 +152,9 @@ class AddEditForm extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    
     const { items } = this.props;
-    console.log('items: ', items);
+    
     return (
       <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
         {/* <FormGroup>

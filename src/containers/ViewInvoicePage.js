@@ -49,12 +49,12 @@ class ViewInvoicePage extends React.Component {
             subTotal+=Math.round(row.amount)
               
             );
-            console.log('subTotal: ', subTotal);
+            
             // subTotal = subTotal;
             tax = (subTotal*10/100);
-            console.log('tax: ', tax);
+            
             total = (subTotal+tax)
-            console.log('total: ', total);
+            
 
             this.setState({
               subTotal: subTotal,

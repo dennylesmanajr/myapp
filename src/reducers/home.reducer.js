@@ -1,7 +1,7 @@
 import { homeConstants } from '../constants';
 
 export function home(state = {}, action) {
-    console.log('action: ', action);
+    
   switch (action.type) {
     case homeConstants.FETCH_LIST_INVOICES_REQUEST:
       return {
