@@ -8,7 +8,7 @@ import moment from "moment";
 import { invoiceActions } from "../actions";
 import ModalForm from "../components/ModalForm";
 
-class NewInvoicePage extends React.Component {
+class EditInvoicePage extends React.Component {
   state = {
     id: 0,
     invoice_number: "",
@@ -17,42 +17,13 @@ class NewInvoicePage extends React.Component {
     total_amount: "",
     location: "",
     hobby: "",
-    editMode: false,
   };
 
   componentDidMount() {
-    console.log('this.props: ',this.props);
-    if(this.props.location.pathname.includes('edit')){
-      console.log('lagi edit nih');
-      this.props.doFetchInvoiceHeader(this.props.match.params.invoice_id)
-    }
     // this.props.dispatch(userActions.getAll());
     // this.props.doFetchListInvoices();
 
     this.props.doFetchListCustomers();
-  }
-
-  componentDidUpdate(prevProps){
-    if (this.props !== prevProps) {
-      if(this.props.invoices !== prevProps.invoices){
-        if(this.props.invoices && this.props.invoices.invoiceHeader){
-          console.log('this.props.invoices.invoiceHeader: ', this.props.invoices.invoiceHeader);
-
-            this.props.invoices.invoiceHeader.map((row,index) => {
-              console.log('row: ', row);
-              this.setState({
-                id : row.id,
-                invoice_number: row.invoice_number,
-                invoice_date: row.invoice_date,
-                customer_id: row.customer_id,
-                total_amount: row.total_amount,
-              });
-              return null;
-
-            })
-        }
-      }
-    }
   }
 
   onChange = (e) => {
@@ -90,9 +61,9 @@ class NewInvoicePage extends React.Component {
 
     return (
       <div className="col-md-12">
-        <h1>{this.props.location.pathname.includes('edit')?`Edit Invoice ${this.state.invoice_number}`:'New Invoice'}</h1>
+        <h1>Edit Invoice</h1>
         <Form
-          onSubmit={this.props.location.pathname.includes('edit') ? this.submitFormEdit : this.submitFormAdd}
+          onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}
           className="form-wrapper"
         >
           <Row form>
@@ -251,13 +222,11 @@ const mapDispatchToProps = (dispatch) => {
     doFetchListCustomers: () => dispatch(invoiceActions.getCustomerList()),
     doAddInvoice: (data) => dispatch(invoiceActions.addInvoice(data)),
     doEditInvoice: (data) => dispatch(invoiceActions.editInvoice(data)),
-    doFetchInvoiceHeader: (param) =>
-      dispatch(invoiceActions.getOneInvoiceHeader(param)),
   };
 };
 
-const connectedNewInvoicePage = connect(
+const connectedEditInvoicePage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewInvoicePage);
-export { connectedNewInvoicePage as NewInvoicePage };
+)(EditInvoicePage);
+export { connectedEditInvoicePage as EditInvoicePage };

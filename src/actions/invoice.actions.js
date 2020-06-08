@@ -11,6 +11,8 @@ export const invoiceActions = {
     getListInvoicesReport,
     getListItems,
     addInvoiceDetail,
+
+    
     editInvoiceDetail,
     deleteInvoiceDetail,
     getOneInvoiceHeader,

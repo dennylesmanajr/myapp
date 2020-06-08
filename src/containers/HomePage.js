@@ -100,11 +100,14 @@ class HomePage extends React.Component {
                   <td>{row.Customer.customer_name}</td>
                   <td>{row.total_amount}</td>
                   <td>
-                    <ModalForm
+                    {/* <ModalForm
                       buttonLabel="Edit"
                       item={row}
                       updateState={this.props.updateState}
-                    />
+                    /> */}
+                    <Link to={`/editinvoice/${row.id}`}>
+                        <button className="btn btn-primary button-margin-side">Edit</button>
+                    </Link>
                     <button
                       className="btn btn-danger button-margin-side"
                       onClick={() => this.handleModalDelete(row.id)}

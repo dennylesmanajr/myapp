@@ -21,7 +21,7 @@ export function invoices(state = {}, action) {
       };
     case invoiceContants.ADD_INVOICE_SUCCESS:
       return {
-        invoiceHeader: action.res,
+        invoiceHeader: [action.res.data],
       };
     case invoiceContants.ADD_INVOICE_FAILURE:
       return {
@@ -33,7 +33,7 @@ export function invoices(state = {}, action) {
       };
     case invoiceContants.EDIT_INVOICE_SUCCESS:
       return {
-        invoiceHeader: action.res,
+        invoiceHeader: [action.res.data],
       };
     case invoiceContants.EDIT_INVOICE_FAILURE:
       return {

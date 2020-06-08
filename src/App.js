@@ -13,6 +13,7 @@ import { ViewInvoicePage } from "./containers/ViewInvoicePage";
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { EditInvoicePage } from "./containers/EditInvoicePage";
 // import { render } from "@testing-library/react";
 
 class App extends React.Component {
@@ -109,6 +110,7 @@ class App extends React.Component {
                             <PrivateRoute exact path="/home" component={HomePage} />
                             <PrivateRoute exact path="/new_invoice" component={NewInvoicePage} />
                             <PrivateRoute path="/invoice/:id" component={ViewInvoicePage} />
+                            <PrivateRoute path="/editinvoice/:invoice_id" component={NewInvoicePage} />
                             <PrivateRoute exact path="/report" component={ReportPage} />
                           </Switch>
                     </Router>
