@@ -132,7 +132,7 @@ class ViewInvoicePage extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {invoicesDetail.invoiceDetailList &&
+            {invoicesDetail && invoicesDetail.invoiceDetailList && invoicesDetail.invoiceDetailList.data &&
               invoicesDetail.invoiceDetailList.data.map((row, index) => (
                 // <li key={user.id}>
                 //     {user.firstName + ' ' + user.lastName}

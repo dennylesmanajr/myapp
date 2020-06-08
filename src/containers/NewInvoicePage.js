@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Button, Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Row, Col, FormFeedback } from "reactstrap";
 import moment from "moment";
 // import { homeActions } from '../actions';
 import { invoiceActions } from "../actions";
@@ -97,6 +97,7 @@ class NewInvoicePage extends React.Component {
                       ? ""
                       : this.state.invoice_number
                   }
+                  required
                 />
               </FormGroup>
             </Col>
@@ -113,6 +114,7 @@ class NewInvoicePage extends React.Component {
                       ? ""
                       : this.state.invoice_date
                   }
+                  required
                 />
               </FormGroup>
             </Col>
@@ -131,6 +133,7 @@ class NewInvoicePage extends React.Component {
                       ? ""
                       : this.state.customer_id
                   }
+                  required
                 >
                   <option key={0} value=''>Choose Customer</option>
                   {customer.customer &&
@@ -198,6 +201,19 @@ class NewInvoicePage extends React.Component {
                     <td>{row.qty}</td>
                     <td>{row.Item.unit_price}</td>
                     <td>{row.amount}</td>
+                    <td>
+                        <ModalForm
+                          buttonLabel="Edit"
+                          item={row}
+                          updateState={this.props.updateState}
+                        />
+                        <button
+                          className="btn btn-danger button-margin-side"
+                          onClick={() => this.handleModalDelete(row.id)}
+                        >
+                          Delete
+                      </button>
+                  </td>
                     </tr>
                 ))} 
           </tbody>

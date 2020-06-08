@@ -42,7 +42,7 @@ class App extends React.Component {
                     }
                     <Router>
                         {authentication.loggedIn && <nav className="navbar navbar-expand navbar-dark bg-dark navbar-wrapper">
-                          <Link to={"/"} className="navbar-brand">
+                          <Link to={"/home"} className="navbar-brand">
                             My App
                           </Link>
                           <div className="navbar-nav mr-auto">
@@ -80,7 +80,7 @@ class App extends React.Component {
                                   Report
                                 </Link>
                               </li>
-                              <li className="nav-item">
+                              {/* <li className="nav-item">
                                 <Link to={"/user"} className="nav-link">
                                   User
                                 </Link>
@@ -89,7 +89,7 @@ class App extends React.Component {
                                 <Link to={"/user"} className="nav-link">
                                   User
                                 </Link>
-                              </li>
+                              </li> */}
                           </div>
 
                             <div className="navbar-nav ml-auto">
