@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import moment from "moment";
+import {Decimal} from "decimal.js";
 import {
   Button,
   Modal,
@@ -22,7 +22,11 @@ import ModalForm from "../components/ModalForm";
 class ViewInvoicePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      subTotal: 0,
+      tax: 0,
+      total: 0,
+    };
   }
   componentDidMount() {
     // this.props.dispatch(userActions.getAll());
@@ -35,15 +39,30 @@ class ViewInvoicePage extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
-      // if(this.props.invoices !== prevProps.invoices){
-      //   
-      //   if(this.props.invoices && this.props.invoices.invoicesHeader){
-      //     this.setState({
-      //       data: this.props.invoices.invoicesHeader,
-      //       loading: false,
-      //     });
-      //   }
-      // }
+      if(this.props.invoicesDetail !== prevProps.invoicesDetail){
+        
+        if(this.props.invoicesDetail.invoiceDetailList && this.props.invoicesDetail.invoiceDetailList.data){
+          var subTotal = 0;
+          var total = 0;
+          var tax = 0;
+          this.props.invoicesDetail.invoiceDetailList.data.map((row,index) => 
+            subTotal+=Math.round(row.amount)
+              
+            );
+            console.log('subTotal: ', subTotal);
+            // subTotal = subTotal;
+            tax = (subTotal*10/100);
+            console.log('tax: ', tax);
+            total = (subTotal+tax)
+            console.log('total: ', total);
+
+            this.setState({
+              subTotal: subTotal,
+              tax,
+              total,
+            })
+          }
+      }
     }
   }
 
@@ -126,6 +145,27 @@ class ViewInvoicePage extends React.Component {
                   <td>{row.amount}</td>
                 </tr>
               ))}
+              <tr key="subtotal">
+                <td></td>
+                <td>Sub Total</td>
+                <td></td>
+                <td></td>
+                <td>{this.state.subTotal}</td>
+              </tr>
+              <tr key="tax">
+                <td></td>
+                <td>Tax (10%)</td>
+                <td></td>
+                <td></td>
+                <td>{this.state.tax}</td>
+              </tr>
+              <tr key="total">
+                <td></td>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td>{this.state.total}</td>
+              </tr>
           </tbody>
         </table>
       </div>
