@@ -5,13 +5,15 @@ import moment from "moment";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { invoiceActions } from "../actions";
 import ModalForm from "../components/ModalForm";
+import { globalConstants } from "../constants";
+import { getRole } from '../helpers/util';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      deleteId: '',
+      deleteId: "",
     };
   }
   componentDidMount() {
@@ -26,20 +28,20 @@ class HomePage extends React.Component {
   };
 
   handleModalDelete = (id) => {
-      
-      this.setState({
-          deleteId: id,
-      })
-      this.toggle();
-  }
+    this.setState({
+      deleteId: id,
+    });
+    this.toggle();
+  };
 
-  handleDelete(){
+  handleDelete() {
     this.props.doDeleteInvoice(this.state.deleteId);
     this.toggle();
   }
 
   render() {
     const { user, users, invoices } = this.props;
+    const role_code = getRole();
 
     return (
       <div className="col-md-12">
@@ -63,9 +65,11 @@ class HomePage extends React.Component {
 
         <h1>List Invoices</h1>
         <div className="col-md-3 float-right">
-          <Link to="/new_invoice">
-                        <button className="btn btn-primary float-right button-margin-tb">New</button>
-                    </Link>
+          {role_code === globalConstants.ROLE_STAFF && <Link to="/new_invoice">
+            <button className="btn btn-primary float-right button-margin-tb">
+              New
+            </button>
+          </Link>}
           {/* <ModalForm
             buttonLabel="Add Invoice"
             addItemToState={this.addItemToState}
@@ -88,10 +92,10 @@ class HomePage extends React.Component {
                 //     {user.firstName + ' ' + user.lastName}
                 // </li>
                 <tr key={index}>
-                  
-                  
-                  <th scope="row"><Link to={`/invoice/${row.id}`}>{row.invoice_number}</Link></th>
-                    
+                  <th scope="row">
+                    <Link to={`/invoice/${row.id}`}>{row.invoice_number}</Link>
+                  </th>
+
                   <td>
                     {moment(row.invoice_date).format(
                       process.env.REACT_APP_FORMAT_DATE
@@ -105,15 +109,18 @@ class HomePage extends React.Component {
                       item={row}
                       updateState={this.props.updateState}
                     /> */}
-                    <Link to={`/editinvoice/${row.id}`}>
-                        <button className="btn btn-primary button-margin-side">Edit</button>
-                    </Link>
-                    <button
-                      className="btn btn-danger button-margin-side"
-                      onClick={() => this.handleModalDelete(row.id)}
-                    >
-                      Delete
-                    </button>
+                    {(role_code === globalConstants.ROLE_LEAD || role_code === globalConstants.ROLE_STAFF) && <Link to={`/editinvoice/${row.id}`}>
+                      <button className="btn btn-primary button-margin-side">
+                        Edit
+                      </button>
+                    </Link>}
+                    {role_code === globalConstants.ROLE_LEAD &&
+                      <button
+                        className="btn btn-danger button-margin-side"
+                        onClick={() => this.handleModalDelete(row.id)}
+                      >
+                        Delete
+                      </button>}
                   </td>
                 </tr>
               ))}
