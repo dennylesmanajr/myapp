@@ -25,6 +25,9 @@ class NewInvoicePage extends React.Component {
     if(this.props.location.pathname.includes('edit')){
       console.log('lagi edit nih');
       this.props.doFetchInvoiceHeader(this.props.match.params.invoice_id)
+      this.props.doFetchListInvoicesDetail({
+        invoice_id: this.props.match.params.invoice_id,
+      });
     }
     // this.props.dispatch(userActions.getAll());
     // this.props.doFetchListInvoices();
@@ -186,7 +189,7 @@ class NewInvoicePage extends React.Component {
             <ModalForm
                 buttonLabel="New"
                 addItemToState={this.addItemToState}
-                headerParam={invoices && invoices.invoiceHeader ? invoices.invoiceHeader.data:{}}
+                headerParam={invoices && invoices.invoiceHeader ? invoices.invoiceHeader[0]:{}}
             />
             </FormGroup>
             {/* } */}
@@ -253,6 +256,8 @@ const mapDispatchToProps = (dispatch) => {
     doEditInvoice: (data) => dispatch(invoiceActions.editInvoice(data)),
     doFetchInvoiceHeader: (param) =>
       dispatch(invoiceActions.getOneInvoiceHeader(param)),
+    doFetchListInvoicesDetail: (param) =>
+      dispatch(invoiceActions.getListInvoicesDetail(param)),
   };
 };
 

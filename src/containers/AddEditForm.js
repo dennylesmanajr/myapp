@@ -66,7 +66,7 @@ class AddEditForm extends React.Component {
   submitFormEdit = e => {
     e.preventDefault()
     const param = {
-      id: this.state.id,
+      id: this.state.invoice,
       invoice_number: this.state.invoice_number,
       invoice_date: this.state.invoice_date,
       customer_id: Number(this.state.customer_id),
